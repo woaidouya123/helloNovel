@@ -6,13 +6,20 @@ class MongoHelper(object):
 		super(MongoHelper, self).__init__()
 		self.myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 		self.mydb = self.myclient["hellonovel"]
-		self.novel_dir = self.mydb["noveldir"]
-		self.novel_content = self.mydb["novelcontent"]
+		self.novel_dir = self.mydb["dirs"]
+		self.novel_content = self.mydb["chapters"]
 
 	#获取全部目录
 	def getAllDir(self):
 		result = []
 		for item in self.novel_dir.find():
+			result.append(item)
+		return result
+
+	#获取目录详情
+	def getDirInfo(self,dir):
+		result = []
+		for item in self.novel_dir.find(dir):
 			result.append(item)
 		return result
 

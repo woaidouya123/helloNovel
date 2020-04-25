@@ -12,6 +12,6 @@ def job1():
 
 if __name__ == '__main__':
 #     schedule.every().day.at('17:49').do(job4)
-    schedule.every(1).minutes.do(job1)
+    schedule.every().day.at('17:00').do(job1)
     while True:
         schedule.run_pending()
