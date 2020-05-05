@@ -20,6 +20,10 @@ var config = {
                 use: ['style-loader', 'css-loader']
             },
             {
+                test: /\.stylus$/,
+                use: ['style-loader', 'css-loader', 'stylus-loader']
+            },
+            {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /(node_modules|bower_components)/,
@@ -27,7 +31,13 @@ var config = {
                     presets:["env","es2015"],
                     plugins:["transform-runtime"]
                 }
-            }
+            },
+            {
+                test: /\.(jpg|png|gif)$/,
+                loader: 'url-loader',
+                // options: { limit: 50000 , name:'images/[name]-[hash:8].[ext]'}
+                options: { limit: 50000 , name:'images/[name].[ext]'}
+              }
         ]
     },
     plugins: [
@@ -40,7 +50,13 @@ var config = {
           inject: true,
           chunks: "all"
         })
-    ]
+    ],
+    resolve:{
+        extensions:['.js','.json','.vue'],
+        alias:{
+            '@' : "./src/"
+        }
+    }
 
 }
 if(isDev){
@@ -52,7 +68,7 @@ if(isDev){
         },
         proxy: {
             '/api':{
-                target:"http://0.0.0.0:8003",
+                target:"http://0.0.0.0:8080",
                 changeOrigin: true,
                 logLevel:'debug'
             }
